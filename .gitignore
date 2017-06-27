@@ -1,0 +1,14 @@
+*.log
+.DS_Store
+.gradle
+/bin/
+/src/generated/
+build
+bulid/local
+.classpath
+.project
+.settings
+.idea/
+entity.iml
+/target/
+dependency-reduced-pom.xml
