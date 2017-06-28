@@ -9,7 +9,7 @@
         <relativePath />
     </parent>
     <groupId>com.zintow</groupId>
-    <artifactId>dingding-notifications</artifactId>
+    <artifactId>dingding-json-pusher</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>hpi</packaging>
 
@@ -27,8 +27,8 @@
         -->
     </properties>
 
-    <name>Dingding Notification Plugin</name>
-    <description>Dingding Notification</description>
+    <name>Dingding JSON Pusher Plugin</name>
+    <description>Allow users to push complex message stored in JSON file to mutiple Dingding groups. </description>
 
     <repositories>
         <repository>
@@ -48,11 +48,6 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.12</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.jenkins-ci.plugins</groupId>-->
-        <!--<artifactId>credentials</artifactId>-->
-        <!--<version>1.9.4</version>-->
-        <!--</dependency>-->
 
     </dependencies>
 
