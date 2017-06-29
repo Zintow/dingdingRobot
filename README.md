@@ -1,3 +1,5 @@
-# Dingding Robot Driver
+# Dingding JSON Pusher
 
-Push message to dingding IM group.
+Allow users to push complex message stored in JSON file to mutiple Dingding groups.
+
+Any format message supported by Dingding can be pushed by this plugin.
