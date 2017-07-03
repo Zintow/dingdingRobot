@@ -18,13 +18,13 @@ import java.io.IOException;
 public class DingdingNotifier extends Notifier {
 
 	private String accessToken;
-	
+
     private String jsonFilePath;
 
     public String getAccessToken() {
         return accessToken;
     }
-    
+
     public String getJsonFilePath() {
 		return jsonFilePath;
 	}
@@ -67,7 +67,7 @@ public class DingdingNotifier extends Notifier {
 
         @Override
         public String getDisplayName() {
-            return "钉钉推送配置";
+            return "Dingding Json Pusher";
         }
 
     }
