@@ -11,9 +11,12 @@ import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Notifier;
 import hudson.tasks.Publisher;
+import hudson.model.Descriptor;
+import hudson.model.Result;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class DingdingNotifier extends Notifier {
 
@@ -47,7 +50,19 @@ public class DingdingNotifier extends Notifier {
 
     @Override
     public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
-        return true;
+    	  Result result = build.getResult();
+    	  boolean status = false;
+    	  if (null != result && result.equals(Result.SUCCESS)) {
+            Map<Descriptor<Publisher>, Publisher> map = build.getProject().getPublishersList().toMap();
+            for (Publisher publisher : map.values()) {
+                if (publisher instanceof DingdingNotifier) {
+                    ((DingdingNotifier) publisher).newDingdingService(build, listener).success();
+                    status = true;
+                    break;
+                }
+            }
+    	  }
+    	  return status;
     }
 
 
