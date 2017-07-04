@@ -1,10 +1,10 @@
 package com.zintow.dingding;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
@@ -18,7 +18,6 @@ import com.alibaba.fastjson.JSONObject;
 
 import hudson.FilePath;
 import hudson.ProxyConfiguration;
-import hudson.model.AbstractBuild;
 import hudson.model.TaskListener;
 import jenkins.model.Jenkins;
 
@@ -29,7 +28,7 @@ public class DingdingServiceImpl implements DingdingService {
     
     private String jsonFilePath;
 	
-	private AbstractBuild build;
+	private FilePath workspace;
 
 
     private static final String apiUrl = "https://oapi.dingtalk.com/robot/send?access_token=";
@@ -37,10 +36,10 @@ public class DingdingServiceImpl implements DingdingService {
     
     private String accessTokens;
 
-    public DingdingServiceImpl(String token, String jsonFilePath, TaskListener listener, AbstractBuild build) {
+    public DingdingServiceImpl(String token, String jsonFilePath, TaskListener listener, FilePath workspace) {
         this.jsonFilePath = jsonFilePath;
         this.accessTokens = token;
-		this.build = build;
+		this.workspace = workspace;
     }
 
 
@@ -122,7 +121,6 @@ public class DingdingServiceImpl implements DingdingService {
     private JSONObject readJsonFilePathWay(){
     	JSONObject dataJson = null;
     	 try {
-    		 FilePath workspace = build.getWorkspace();
     		 FilePath dingding = new FilePath(workspace, this.jsonFilePath);
 			dataJson = JSONObject.parseObject(dingding.readToString());
 		} catch (Exception e) {
@@ -133,7 +131,6 @@ public class DingdingServiceImpl implements DingdingService {
 
     private void writeJson(String s){
     	 try {
-    		 FilePath workspace = build.getWorkspace();
     		 FilePath dingding = new FilePath(workspace, this.jsonFilePath);
     		 dingding.write(s, null);
 		} catch (Exception e) {

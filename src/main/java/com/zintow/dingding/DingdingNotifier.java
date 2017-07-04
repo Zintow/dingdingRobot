@@ -1,24 +1,25 @@
 package com.zintow.dingding;
 
 
+import java.io.IOException;
+
+import org.jenkinsci.Symbol;
+import org.kohsuke.stapler.DataBoundConstructor;
+
 import hudson.Extension;
+import hudson.FilePath;
 import hudson.Launcher;
-import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
-import hudson.model.BuildListener;
+import hudson.model.Result;
+import hudson.model.Run;
 import hudson.model.TaskListener;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Notifier;
 import hudson.tasks.Publisher;
-import hudson.model.Descriptor;
-import hudson.model.Result;
-import org.kohsuke.stapler.DataBoundConstructor;
+import jenkins.tasks.SimpleBuildStep;
 
-import java.io.IOException;
-import java.util.Map;
-
-public class DingdingNotifier extends Notifier {
+public class DingdingNotifier extends Notifier implements SimpleBuildStep{
 
 	private String accessToken;
 
@@ -39,8 +40,8 @@ public class DingdingNotifier extends Notifier {
         this.jsonFilePath = jsonFilePath;
     }
 
-    public DingdingService newDingdingService(AbstractBuild build, TaskListener listener) {
-        return new DingdingServiceImpl(accessToken, jsonFilePath, listener, build);
+    public DingdingService newDingdingService(FilePath workspace, TaskListener listener) {
+        return new DingdingServiceImpl(accessToken, jsonFilePath, listener, workspace);
     }
 
     @Override
@@ -48,22 +49,16 @@ public class DingdingNotifier extends Notifier {
         return BuildStepMonitor.NONE;
     }
 
-    @Override
-    public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
-    	  Result result = build.getResult();
-    	  boolean status = false;
-    	  if (null != result && result.equals(Result.SUCCESS)) {
-            Map<Descriptor<Publisher>, Publisher> map = build.getProject().getPublishersList().toMap();
-            for (Publisher publisher : map.values()) {
-                if (publisher instanceof DingdingNotifier) {
-                    ((DingdingNotifier) publisher).newDingdingService(build, listener).success();
-                    status = true;
-                    break;
-                }
-            }
-    	  }
-    	  return status;
-    }
+	@Override
+	public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener)
+			throws InterruptedException, IOException {
+		System.out.println("here");
+		Result result = run.getResult();
+        if (null != result && result.equals(Result.SUCCESS)) {
+        	this.newDingdingService(workspace, listener).success();
+        }
+		
+	}
 
 
     @Override
@@ -72,6 +67,7 @@ public class DingdingNotifier extends Notifier {
     }
 
     @Extension
+    @Symbol("dingding")
     public static class DingdingNotifierDescriptor extends BuildStepDescriptor<Publisher> {
 
 
