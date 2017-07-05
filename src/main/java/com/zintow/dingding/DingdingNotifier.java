@@ -52,7 +52,6 @@ public class DingdingNotifier extends Notifier implements SimpleBuildStep{
 	@Override
 	public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener)
 			throws InterruptedException, IOException {
-		System.out.println("here");
 		Result result = run.getResult();
         if (null != result && result.equals(Result.SUCCESS)) {
         	this.newDingdingService(workspace, listener).success();
