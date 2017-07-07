@@ -64,8 +64,8 @@
 
 
   <scm>
-    <connection>scm\:git\:ssh\://git@github.com/jenkinsci/dingding-json-pusher-plugin.git</connection>
-    <developerConnection>scm\:git\:ssh\://git@github.com/jenkinsci/dingding-json-pusher-plugin.git</developerConnection>
-    <url>http://github.com/jenkinsci/dingding-json-pusher-plugin</url>
+    <connection>scm\:git\:ssh\://git@github.com:Zintow/dingdingRobot.git</connection>
+    <developerConnection>scm\:git\:ssh\://git@github.com:Zintow/dingdingRobot.git</developerConnection>
+    <url>https://github.com/Zintow/dingdingRobot</url>
   </scm>
 </project>
