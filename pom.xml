@@ -62,4 +62,8 @@
 
     </dependencies>
 
+
+  <scm>
+    <url>http://github.com/jenkinsci/dingding-json-pusher-plugin</url>
+  </scm>
 </project>
